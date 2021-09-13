@@ -32,7 +32,7 @@ export const Header = observer(() => {
             </a>
           </li>
           <li>
-            <a style={{ color: themes[themeName].color }} href="#">
+            <a style={{ color: themes[themeName].color }} href="#footer">
               Контакты
             </a>
           </li>

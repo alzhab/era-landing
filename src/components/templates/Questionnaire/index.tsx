@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { observer } from "mobx-react";
 import { Button, Modal, Question } from "@components";
 import { AppContext } from "@context";
@@ -10,6 +10,8 @@ export const Questionnaire = observer(() => {
   const {
     stores: { questionsStore },
   } = useContext(AppContext);
+
+  const answers = questionsStore.answers;
 
   const nextClickHandler = () => {
     if (questionsStore.activeQuestion === 1) {
@@ -38,89 +40,108 @@ export const Questionnaire = observer(() => {
   };
 
   return (
-    <Modal
-      open={questionsStore.modalOpen}
-      close={() => questionsStore.setModalOpen(false)}
-    >
-      {questionsStore.loading && (
-        <LinearProgress
-          style={{ position: "absolute", left: 0, right: 0, top: 0 }}
-        />
-      )}
-
-      <div className={classes.card__header}>
-        <p>Пройдите тест и получите расчет стоимости</p>
-        <p>
-          {questionsStore.activeQuestion}/{questionsStore.list.length + 1}
+    <>
+      <Modal
+        open={questionsStore.submitDataSuccess}
+        close={() => {
+          questionsStore.setSubmitDataSuccess(false);
+          questionsStore.clear();
+        }}
+      >
+        <p style={{ textAlign: "center", fontSize: 18, fontWeight: 700 }}>
+          Спасибо. Заявка принята. В ближайшее время с Вами свяжется наш
+          менеджер.
         </p>
-      </div>
+      </Modal>
 
-      <div className={classes.card__progress}>
-        <div
-          style={{
-            width:
-              questionsStore.activeQuestion === 1
-                ? 0
-                : `${
-                    (questionsStore.activeQuestion * 100) /
-                    (questionsStore.list.length + 1)
-                  }%`,
-          }}
-        />
-      </div>
+      <Modal
+        open={questionsStore.modalOpen}
+        close={() => questionsStore.setModalOpen(false)}
+      >
+        {questionsStore.loading && (
+          <LinearProgress
+            style={{ position: "absolute", left: 0, right: 0, top: 0 }}
+          />
+        )}
 
-      {questionsStore.activeQuestion === 1 ? (
-        <Question
-          defaultValue={questionsStore.type}
-          question={"Какой продукт вам нужен ?"}
-          rootClassName={classes.card__body}
-          fields={[
-            {
-              type: IFieldType.radio,
-              name: IQuestionnaireType.web,
-              placeholder: "Landing page",
-            },
-            {
-              type: IFieldType.radio,
-              name: IQuestionnaireType.corporate,
-              placeholder: "Корпоративный сайт",
-            },
-            {
-              type: IFieldType.radio,
-              name: IQuestionnaireType.online,
-              placeholder: "Интернет - магазин",
-            },
-            {
-              type: IFieldType.radio,
-              name: IQuestionnaireType.mobile,
-              placeholder: "Мобильное приложение",
-            },
-          ]}
-          onChange={(type) =>
-            questionsStore.setType(type as IQuestionnaireType)
-          }
-        />
-      ) : (
-        <Question
-          question={questionsStore.activeQuestionData.name}
-          rootClassName={classes.card__body}
-          fields={questionsStore.activeQuestionData.fields || []}
-          onChange={(newVal) => questionsStore.setAnswer(newVal)}
-        />
-      )}
+        <div className={classes.card__header}>
+          <p>Пройдите тест и получите расчет стоимости</p>
+          <p>
+            {questionsStore.activeQuestion}/{questionsStore.list.length + 1}
+          </p>
+        </div>
 
-      <div className={classes.card__footer}>
-        <Button click={backClickHandler} className={classes.back_button}>
-          Назад
-        </Button>
-        <Button click={nextClickHandler}>
-          {questionsStore.list.length &&
-          questionsStore.list.length + 1 === questionsStore.activeQuestion
-            ? "Получить расчет"
-            : "Далее"}
-        </Button>
-      </div>
-    </Modal>
+        <div className={classes.card__progress}>
+          <div
+            style={{
+              width:
+                questionsStore.activeQuestion === 1
+                  ? 0
+                  : `${
+                      (questionsStore.activeQuestion * 100) /
+                      (questionsStore.list.length + 1)
+                    }%`,
+            }}
+          />
+        </div>
+
+        {questionsStore.activeQuestion === 1 ? (
+          <Question
+            defaultValue={questionsStore.type}
+            question={"Какой продукт вам нужен ?"}
+            rootClassName={classes.card__body}
+            answers={answers}
+            fields={[
+              {
+                type: IFieldType.radio,
+                name: IQuestionnaireType.web,
+                placeholder: "Landing page",
+              },
+              {
+                type: IFieldType.radio,
+                name: IQuestionnaireType.corporate,
+                placeholder: "Корпоративный сайт",
+              },
+              {
+                type: IFieldType.radio,
+                name: IQuestionnaireType.online,
+                placeholder: "Интернет - магазин",
+              },
+              {
+                type: IFieldType.radio,
+                name: IQuestionnaireType.mobile,
+                placeholder: "Мобильное приложение",
+              },
+            ]}
+            onChange={(type) =>
+              questionsStore.setType(type as IQuestionnaireType)
+            }
+          />
+        ) : (
+          <Question
+            question={questionsStore.activeQuestionData.name}
+            rootClassName={classes.card__body}
+            answers={answers}
+            fields={questionsStore.activeQuestionData.fields || []}
+            onChange={(newVal, index) =>
+              questionsStore.setAnswer(newVal, index)
+            }
+          />
+        )}
+
+        <div className={classes.card__footer}>
+          <Button click={backClickHandler} className={classes.back_button}>
+            Назад
+          </Button>
+          <Button click={nextClickHandler}>
+            {questionsStore.list.length &&
+            questionsStore.list.length + 1 === questionsStore.activeQuestion
+              ? "Получить расчет"
+              : "Далее"}
+          </Button>
+        </div>
+      </Modal>
+    </>
   );
 });
 

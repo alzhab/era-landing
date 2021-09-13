@@ -4,24 +4,25 @@ import Question1 from "@assets/images/Question1.svg";
 import { makeStyles, Theme } from "@material-ui/core";
 import { FONTS } from "@assets/const";
 import { ThemeContext } from "@context";
-import { Checkbox, Radio } from "@components";
+import { Checkbox, Input, Radio } from "@components";
 import { IField, IFieldType, IQuestionnaireType } from "@models/question";
 
 interface IQuestionProps {
   rootClassName?: any;
   question: string;
   defaultValue?: string;
-  onChange: (newVal: string | string[]) => void;
+  onChange: (newVal: string | string[], index?: number) => void;
   fields: IField[];
+  answers: { [key: string]: string[] };
 }
 
 export const Question: FC<IQuestionProps> = (props) => {
   const classes = useStyles();
-  const [activeValue, setActiveValue] = useState(props.defaultValue);
+  const [activeRadioValue, setActiveRadioValue] = useState(props.defaultValue);
   const [checkoxActiveValues, setCheckoxActiveValues] = useState<string[]>([]);
 
   const onChangeRadioHandler = (newVal: string) => {
-    setActiveValue(newVal);
+    setActiveRadioValue(newVal);
     props.onChange(newVal);
   };
 
@@ -30,12 +31,16 @@ export const Question: FC<IQuestionProps> = (props) => {
     props.onChange(newVal);
   };
 
+  const onChangeInputHandler = (newVal: string, index: number) => {
+    props.onChange(newVal, index);
+  };
+
   const fields: { [key in IFieldType]: any } = {
     [IFieldType.radio]: (field: IField) => (
       <Radio
         label={field.placeholder || field.name}
         value={field.name}
-        activeValue={activeValue}
+        activeValue={activeRadioValue}
         onChange={onChangeRadioHandler}
       />
     ),
@@ -47,14 +52,27 @@ export const Question: FC<IQuestionProps> = (props) => {
         onChange={onChangeCheckboxHandler}
       />
     ),
-    [IFieldType.text]: (field: IField) => (
-      <Radio
-        label={field.placeholder || field.name}
-        value={field.name}
-        activeValue={activeValue}
-        onChange={onChangeRadioHandler}
-      />
-    ),
+    [IFieldType.text]: (field: IField, index: number) => {
+      console.log(props.answers);
+      console.log(props.question);
+      console.log(index);
+      return (
+        <Input
+          defaultValue={
+            props.answers[props.question]
+              ? props.answers[props.question][index]
+              : ""
+          }
+          style={{
+            borderWidth: 1,
+            borderColor: "#D8D8D8",
+            borderStyle: "solid",
+          }}
+          placeholder={field.placeholder || field.name}
+          onChange={(e) => onChangeInputHandler(e.target.value, index)}
+        />
+      );
+    },
   };
 
   return (
@@ -62,7 +80,7 @@ export const Question: FC<IQuestionProps> = (props) => {
       <div className={classes.card__question}>
         <h2>{props.question}</h2>
 
-        {props.fields.map((field) => fields[field.type](field))}
+        {props.fields.map((field, index) => fields[field.type](field, index))}
       </div>
 
       <img src={Question1} alt="" />

@@ -13,6 +13,7 @@ export default class QuestionsStore extends BaseStore {
   list: IQuestion[] = [];
   activeQuestion = 1;
   answers: { [key: string]: string[] } = {};
+  submitDataSuccess = false;
 
   constructor(private questionsApi: LandingApi) {
     super();
@@ -28,6 +29,8 @@ export default class QuestionsStore extends BaseStore {
       setType: action,
       setAnswer: action,
       submitData: action,
+      setSubmitDataSuccess: action,
+      chooseType: action,
 
       activeQuestionData: computed,
       isSubmitButtonDisabled: computed,
@@ -50,7 +53,6 @@ export default class QuestionsStore extends BaseStore {
           newAnswers[item.name] = [];
         });
 
-        console.log(newAnswers);
         this.answers = newAnswers;
       },
     });
@@ -78,7 +80,8 @@ export default class QuestionsStore extends BaseStore {
           questionnaire_name: this.type,
           questionnaire_answers: answers,
         }),
-      success: (data) => {
+      success: () => {
+        this.submitDataSuccess = true;
         this.clear();
       },
     });
@@ -88,9 +91,13 @@ export default class QuestionsStore extends BaseStore {
     this.modalOpen = val;
   }
 
-  setAnswer(values: string[] | string) {
+  setAnswer(values: string[] | string, index?: number) {
     const name = this.activeQuestionData.name;
-    this.answers[name] = typeof values === "string" ? [values] : values;
+    if (typeof index === "number" && typeof values === "string") {
+      this.answers[name][index] = values;
+    } else {
+      this.answers[name] = typeof values === "string" ? [values] : values;
+    }
   }
 
   setActiveQuestion(val: number) {
@@ -109,8 +116,21 @@ export default class QuestionsStore extends BaseStore {
       : false;
   }
 
+  setSubmitDataSuccess(val: boolean) {
+    this.submitDataSuccess = val;
+  }
+
+  chooseType(type: IQuestionnaireType) {
+    this.type = type;
+    this.modalOpen = true;
+  }
+
   clear() {
     super.clear();
+    this.modalOpen = true;
+    this.type = IQuestionnaireType.web;
+    this.activeQuestion = 1;
+    this.answers = {};
     this.list = [];
   }
 }

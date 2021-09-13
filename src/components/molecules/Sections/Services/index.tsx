@@ -4,8 +4,9 @@ import { makeStyles, Theme } from "@material-ui/core";
 import { Button, ButtonType, Heading } from "@components";
 import FingersLeft from "@assets/images/FingersLeft.svg";
 import { FONTS } from "@assets/const";
-import { ThemeContext } from "@context";
+import { AppContext, ThemeContext } from "@context";
 import { themes } from "@models/themes";
+import { IQuestionnaireType } from "@models/question";
 
 const tabs = [
   { id: 1, title: "Landing page" },
@@ -20,6 +21,7 @@ const configs = {
     text: `Landing page –  это одностраничный сайт. Основная задача - увеличение конверсии. <br /> Лендинг подталкивает потенциального клиента к тому, чтобы стать клиентом действующим.`,
     price: 250000,
     list: ["анализ рынка", "разработка дизайна", "тестирование"],
+    type: IQuestionnaireType.web,
   },
   2: {
     title: "интернет магазин",
@@ -33,6 +35,7 @@ const configs = {
       "возможность получать прибыль на карту",
       "тестирование",
     ],
+    type: IQuestionnaireType.online,
   },
   3: {
     title: "корпоративный сайт",
@@ -46,6 +49,7 @@ const configs = {
       "возможность получать прибыль на карту",
       "тестирование",
     ],
+    type: IQuestionnaireType.corporate,
   },
   4: {
     title: "Мобильное приложение",
@@ -58,10 +62,14 @@ const configs = {
       "возможность получать прибыль на карту",
       "тестирование",
     ],
+    type: IQuestionnaireType.mobile,
   },
 };
 
 export const Services = observer(() => {
+  const {
+    stores: { questionsStore },
+  } = useContext(AppContext);
   const { themeName } = useContext(ThemeContext);
   const [activeService, setActiveService] = useState(1);
   const classes = useStyles();
@@ -103,7 +111,14 @@ export const Services = observer(() => {
               тг
             </span>
 
-            <Button padding={{ right: 73 }}>Мне нужно это</Button>
+            <Button
+              click={() =>
+                questionsStore.chooseType(configs[activeService].type)
+              }
+              padding={{ right: 73 }}
+            >
+              Мне нужно это
+            </Button>
           </div>
 
           <div

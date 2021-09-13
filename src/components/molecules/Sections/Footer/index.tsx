@@ -17,7 +17,7 @@ export const Footer = observer(() => {
   const secondColor = themeName === ThemesTypes.light ? "#0A142F" : "#F2F2F2";
 
   return (
-    <section className={classes.footer}>
+    <section className={classes.footer} id={"footer"}>
       <div className="container">
         <div className={classes.footer__top_row}>
           <div className={classes.footer__company}>
