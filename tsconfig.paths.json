@@ -1,0 +1,14 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@assets/*": ["src/assets/*"],
+      "@models/*": ["src/models/*"],
+      "@components": ["src/components/index.ts"],
+      "@context": ["src/context/index.ts"],
+      "@modules": ["src/modules/index.ts"],
+      "@pages": ["src/pages/index.ts"],
+      "@types": ["src/types/index.ts"]
+    }
+  }
+}

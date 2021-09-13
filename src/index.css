@@ -1,0 +1,91 @@
+@font-face {
+  font-family: "Circe-Regular";
+  src: local("Circe-Regular"),
+    url("assets/fonts/Circe-Regular.otf") format("truetype");
+}
+
+@font-face {
+  font-family: "Circe-Light";
+  src: local("Circe-Light"),
+    url("assets/fonts/Circe-Light.otf") format("truetype");
+}
+
+@font-face {
+  font-family: "Circe-Medium";
+  src: local("Circe-Medium"),
+    url("assets/fonts/Circe-Medium.otf") format("truetype");
+}
+
+@font-face {
+  font-family: "Circe-Bold";
+  src: local("Circe-Bold"),
+    url("./assets/fonts/Circe-Bold.otf") format("truetype");
+}
+
+@font-face {
+  font-family: "Circe-ExtraBold";
+  src: local("Circe-ExtraBold"),
+    url("./assets/fonts/Circe-ExtraBold.otf") format("truetype");
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: "Circe-Regular", sans-serif;
+  background: #fff;
+  min-height: 100vh;
+}
+
+main {
+  transition: 0.3s ease-out background-color, color;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
+}
+
+* {
+  -webkit-appearance: none;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  text-decoration: none;
+}
+
+*:focus {
+  outline: none;
+}
+
+#root {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+}
+
+ul,
+ol,
+li {
+  padding: 0;
+  list-style: none;
+}
+
+.container {
+  width: 90%;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.gradient-back {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(92.71deg, #4a95ff 23.31%, #ac9bff 73.76%);
+  opacity: 0.23;
+}

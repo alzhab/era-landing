@@ -1,0 +1,70 @@
+{
+  "env": {
+    "browser": false,
+    "es2021": true
+  },
+  "extends": [
+    "eslint:recommended",
+    "plugin:react/recommended",
+    "plugin:@typescript-eslint/recommended"
+  ],
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true
+    },
+    "ecmaVersion": 2018,
+    "sourceType": "module"
+  },
+  "plugins": ["react", "@typescript-eslint"],
+  "rules": {
+    "no-prototype-builtins": "off",
+    "@typescript-eslint/no-inferrable-types": "off",
+    "react/display-name": "off",
+    "prefer-for-of": "off",
+    "no-debugger": 0,
+    "react/prop-types": 0,
+    "@typescript-eslint/no-empty-interface": "off",
+    "semi": 0,
+    "@typescript-eslint/ban-ts-ignore": "off",
+    "@typescript-eslint/ban-ts-comment": "off",
+    "no-mixed-spaces-and-tabs": 0,
+    "indent": "off",
+    "import/no-unresolved": "off",
+    "arrow-parens": 0,
+    "no-tabs": 0,
+    "comma-dangle": 0,
+    "require-jsdoc": [
+      "error",
+      {
+        "require": {
+          "FunctionDeclaration": false,
+          "MethodDefinition": false,
+          "ClassDeclaration": false,
+          "ArrowFunctionExpression": false,
+          "FunctionExpression": false
+        }
+      }
+    ],
+    "operator-linebreak": 0
+  },
+  "settings": {
+    "import/resolver": {
+      "webpack": {
+        "config": "./webpack.config.js"
+      },
+      "alias": {
+        "map": [
+          ["@assets/*", "./src/assets/*"],
+          ["@models/*", "./src/models/*"],
+          ["@components", "./src/components/index.ts"],
+          ["@context", "./src/context/index.ts"],
+          ["@modules", "./src/modules/index.ts"],
+          ["@pages", "./src/pages/index.ts"],
+          ["@types", "./src/types/index.ts"]
+        ]
+      },
+      "extensions": [".js", ".ts", ".tsx", ".scss"]
+    }
+  }
+}
