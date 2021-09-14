@@ -53,9 +53,6 @@ export const Question: FC<IQuestionProps> = (props) => {
       />
     ),
     [IFieldType.text]: (field: IField, index: number) => {
-      console.log(props.answers);
-      console.log(props.question);
-      console.log(index);
       return (
         <Input
           defaultValue={
@@ -67,6 +64,7 @@ export const Question: FC<IQuestionProps> = (props) => {
             borderWidth: 1,
             borderColor: "#D8D8D8",
             borderStyle: "solid",
+            marginBottom: 15,
           }}
           placeholder={field.placeholder || field.name}
           onChange={(e) => onChangeInputHandler(e.target.value, index)}
@@ -80,7 +78,11 @@ export const Question: FC<IQuestionProps> = (props) => {
       <div className={classes.card__question}>
         <h2>{props.question}</h2>
 
-        {props.fields.map((field, index) => fields[field.type](field, index))}
+        {props.fields.map((field, index) => (
+          <React.Fragment key={index}>
+            {fields[field.type](field, index)}
+          </React.Fragment>
+        ))}
       </div>
 
       <img src={Question1} alt="" />

@@ -100,10 +100,11 @@ export default class QuestionsStore extends BaseStore {
     }
   }
 
-  setActiveQuestion(val: number) {
-    if (!this.isSubmitButtonDisabled) {
-      this.activeQuestion = val;
+  setActiveQuestion(val: number, check = false) {
+    if (check && this.isSubmitButtonDisabled) {
+      return;
     }
+    this.activeQuestion = val;
   }
 
   setType(val: IQuestionnaireType) {

@@ -56,10 +56,14 @@ const useStyles = makeStyles((theme: Theme) => ({
     justifyContent: "center",
   },
   card: {
-    padding: 36,
+    padding: 20,
     width: "90%",
     maxWidth: 870,
     position: "relative",
+
+    [theme.breakpoints.up("md")]: {
+      padding: 36,
+    },
   },
   card__header: {
     display: "flex",

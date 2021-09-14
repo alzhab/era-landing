@@ -20,7 +20,7 @@ export const Questionnaire = observer(() => {
       questionsStore.activeQuestion !==
       questionsStore.list.length + 1
     ) {
-      questionsStore.setActiveQuestion(questionsStore.activeQuestion + 1);
+      questionsStore.setActiveQuestion(questionsStore.activeQuestion + 1, true);
     } else {
       questionsStore.submitData();
     }
@@ -133,7 +133,7 @@ export const Questionnaire = observer(() => {
           <Button click={backClickHandler} className={classes.back_button}>
             Назад
           </Button>
-          <Button click={nextClickHandler}>
+          <Button click={nextClickHandler} className={classes.next_button}>
             {questionsStore.list.length &&
             questionsStore.list.length + 1 === questionsStore.activeQuestion
               ? "Получить расчет"
@@ -157,12 +157,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     alignItems: "center",
     justifyContent: "center",
   },
-  card: {
-    padding: 36,
-    width: "90%",
-    maxWidth: 870,
-    position: "relative",
-  },
+
   card__header: {
     display: "flex",
     alignItems: "center",
@@ -194,10 +189,29 @@ const useStyles = makeStyles((theme: Theme) => ({
     display: "flex",
     alignItems: "center",
     justifyContent: "space-between",
+    flexDirection: "column-reverse",
+
+    [theme.breakpoints.up("md")]: {
+      flexDirection: "row",
+    },
   },
   back_button: {
     background: "#E2E2E2 !important",
     boxShadow: "none !important",
     color: "#5E5E5E !important",
+    width: "80%",
+    marginTop: "15px !important",
+
+    [theme.breakpoints.up("md")]: {
+      marginTop: 0,
+      width: "initial",
+    },
+  },
+  next_button: {
+    width: "80%",
+
+    [theme.breakpoints.up("md")]: {
+      width: "initial",
+    },
   },
 }));
