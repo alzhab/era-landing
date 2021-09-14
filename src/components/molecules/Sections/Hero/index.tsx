@@ -24,7 +24,7 @@ export const Hero = observer(() => {
     <section className={classes.hero}>
       <div className="container">
         <div className={classes.hero__info}>
-          <span>Set Data Development -</span>
+          <span>SetData Development -</span>
           <h1>
             эффективное решение <br className={classes.lineBreaker} /> для
             вашего бизнеса

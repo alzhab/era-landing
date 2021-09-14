@@ -74,8 +74,8 @@ export const CallForm = observer(() => {
                 onChange={onChange}
                 onBlur={onBlur}
                 mask
-                disabled={consultationStore.loading}
                 className={classes.callForm__input}
+                disabled={consultationStore.loading}
                 placeholder={"+7"}
                 error={error?.message || ""}
               />
@@ -111,9 +111,13 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
   callForm__button: {
     fontSize: 14,
+    marginTop: "25px !important",
+    marginLeft: "0 !important",
 
     [theme.breakpoints.up("md")]: {
       fontSize: 18,
+      marginTop: "0 !important",
+      marginLeft: "24px !important",
     },
   },
   callForm__input: {

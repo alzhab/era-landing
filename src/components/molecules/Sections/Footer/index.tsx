@@ -27,7 +27,7 @@ export const Footer = observer(() => {
               className={classes.footer__address}
               style={{ color: mainColor }}
             >
-              Тут будет адресс
+              Решение для вашего бизнеса
             </h2>
           </div>
 
@@ -78,8 +78,8 @@ export const Footer = observer(() => {
             <a style={{ color: mainColor }} href={`tel:${staticService.phone}`}>
               {staticService.phone}
             </a>
-            <a style={{ color: mainColor }} href="mailto:academy@setdata.kz">
-              academy@setdata.kz
+            <a style={{ color: mainColor }} href="mailto:info@setdata.kz">
+              info@setdata.kz
             </a>
           </div>
 

@@ -8,6 +8,7 @@ interface IInputProps {
   mask?: boolean;
   error?: string;
   rootStyle?: CSSProperties;
+  rootClass?: any;
 }
 
 export const Input: FC<
@@ -26,7 +27,10 @@ export const Input: FC<
   };
 
   return (
-    <div style={props.rootStyle}>
+    <div
+      className={`${classes.rootStyle} ${props.rootClass}`}
+      style={props.rootStyle}
+    >
       {props.mask ? ( // @ts-ignore
         <InputMask
           {...props}
@@ -66,15 +70,18 @@ export const Input: FC<
 };
 
 const useStyles = makeStyles((theme: Theme) => ({
+  rootStyle: {
+    width: "100%",
+
+    [theme.breakpoints.up("md")]: {
+      width: 313,
+    },
+  },
   input: {
     width: "100%",
     border: "none",
     padding: "12px 24px",
     background: "#FFFFFF",
     borderRadius: 20,
-
-    [theme.breakpoints.up("md")]: {
-      width: 313,
-    },
   },
 }));
