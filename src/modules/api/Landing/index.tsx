@@ -23,9 +23,19 @@ export default class LandingApi extends BaseAPI {
 
   async setConsultation(phone: string): Promise<IQuestion[]> {
     try {
-      const response = await this.post(this.consultationUrl, {
-        phone_number: phone,
-      });
+      const response = await this.post(
+        this.consultationUrl,
+        {
+          phone_number: phone,
+        },
+        {
+          withCredentials: false,
+          headers: {
+            "Access-Control-Allow-Origin": "*",
+            "Content-Type": "application/x-www-form-urlencoded",
+          },
+        }
+      );
       return response?.data;
     } catch (e) {
       return [];
@@ -34,7 +44,13 @@ export default class LandingApi extends BaseAPI {
 
   async orderAnswers(body: IQuestionnaire): Promise<string> {
     try {
-      const response = await this.post(this.orderAnswersUrl, body);
+      const response = await this.post(this.orderAnswersUrl, body, {
+        withCredentials: false,
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+      });
       return response?.data;
     } catch (e) {
       return "";
@@ -47,7 +63,13 @@ export default class LandingApi extends BaseAPI {
     phone_number: string;
   }): Promise<IQuestion[]> {
     try {
-      const response = await this.post(this.applicationUrl, body);
+      const response = await this.post(this.applicationUrl, body, {
+        withCredentials: false,
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+      });
       return response?.data;
     } catch (e) {
       return [];
