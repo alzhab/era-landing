@@ -82,6 +82,7 @@ export default class QuestionsStore extends BaseStore {
         }),
       success: () => {
         this.submitDataSuccess = true;
+        this.modalOpen = false;
         this.clear();
       },
     });
