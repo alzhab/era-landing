@@ -33,7 +33,7 @@ export interface IQuestionnaireAnswer {
   // IQuestion [name]
   question_name: string;
   // IField [name] []
-  question_answers: string[];
+  answers: string[];
 }
 
 export interface IQuestionnaire {

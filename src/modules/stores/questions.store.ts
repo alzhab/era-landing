@@ -69,7 +69,7 @@ export default class QuestionsStore extends BaseStore {
       if (this.answers.hasOwnProperty(answersKey)) {
         answers.push({
           question_name: answersKey,
-          question_answers: this.answers[answersKey],
+          answers: this.answers[answersKey],
         });
       }
     }
